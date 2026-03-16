@@ -1,364 +1,388 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mantenimiento Tool box</title>
-<meta name="theme-color" content="#0f172a" />
-<style>
-  :root{
-    --bg:#0f172a;
-    --card:#1e293b;
-    --panel:#0b1220;
-    --line:#334155;
-    --text:#f8fafc;
-    --muted:#cbd5e1;
-    --green:#22c55e;
-    --yellow:#facc15;
-    --blue:#0ea5e9;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    padding:20px;
-  }
-  .badge{
-    display:inline-block;
-    background:var(--blue);
-    color:#fff;
-    padding:6px 12px;
-    border-radius:999px;
-    font-size:12px;
-    margin-bottom:10px;
-  }
-  h1{margin:8px 0 12px;font-size:clamp(34px,7vw,62px);line-height:1.05}
-  p{color:var(--muted);margin-top:0}
-  .menu button,#submenu button,.calcbtn,.pro-btn,.ghost-btn{
-    margin:5px;
-    padding:12px 16px;
-    border:none;
-    border-radius:14px;
-    cursor:pointer;
-    transition:.2s ease;
-  }
-  .menu button{
-    background:var(--green);
-    color:#04110a;
-    font-weight:700;
-    min-width:140px;
-  }
-  #submenu button{
-    background:var(--line);
-    color:#fff;
-    font-weight:500;
-  }
-  .calcbtn,.pro-btn{
-    background:var(--green);
-    color:#04110a;
-    font-weight:700;
-  }
-  .ghost-btn{
-    background:var(--line);
-    color:#fff;
-  }
-  .card{
-    background:var(--card);
-    padding:18px;
-    border-radius:18px;
-    margin-top:15px;
-    box-shadow:0 8px 24px rgba(0,0,0,.28);
-  }
-  input{
-    padding:12px;
-    margin:6px;
-    width:220px;
-    max-width:calc(100vw - 70px);
-    border-radius:12px;
-    border:1px solid #475569;
-    background:var(--panel);
-    color:#fff;
-    outline:none;
-  }
-  input::placeholder{color:#94a3b8}
-  .result{
-    margin-top:12px;
-    font-weight:bold;
-    color:var(--text);
-    line-height:1.6;
-    background:var(--panel);
-    padding:12px;
-    border-radius:12px;
-    border:1px solid var(--line);
-    min-height:24px;
-  }
-  .lock{color:var(--yellow);font-weight:bold}
-  .note{font-size:13px;color:#94a3b8;margin-top:8px}
-  .topbar{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-bottom:8px;
-  }
-  .app-icon{
-    width:64px;height:64px;border-radius:18px;
-    background:linear-gradient(135deg,#22c55e,#0ea5e9);
-    display:flex;align-items:center;justify-content:center;
-    font-size:34px;box-shadow:0 10px 24px rgba(0,0,0,.28);
-  }
-  .splash{
-    position:fixed;inset:0;z-index:9999;
-    display:flex;align-items:center;justify-content:center;
-    background:radial-gradient(circle at top,#10204a,#0b1220 55%,#060b16);
-    color:#fff;
-    transition:opacity .5s ease, visibility .5s ease;
-  }
-  .splash.hide{opacity:0;visibility:hidden}
-  .splash-card{
-    text-align:center;
-    padding:28px;
-  }
-  .splash-icon{
-    width:96px;height:96px;border-radius:28px;
-    margin:0 auto 16px;
-    background:linear-gradient(135deg,#22c55e,#0ea5e9);
-    display:flex;align-items:center;justify-content:center;
-    font-size:52px;
-    box-shadow:0 18px 40px rgba(0,0,0,.35);
-  }
-  .splash h2{margin:0 0 8px;font-size:34px}
-  .splash small{color:#cbd5e1}
-  .modal-bg{
-    position:fixed;inset:0;z-index:9998;
-    background:rgba(2,6,23,.72);
-    display:none;align-items:center;justify-content:center;
-    padding:20px;
-  }
-  .modal-bg.show{display:flex}
-  .modal{
-    width:min(92vw,420px);
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:22px;
-    padding:22px;
-    box-shadow:0 16px 40px rgba(0,0,0,.38);
-  }
-  .modal h3{margin:0 0 10px;font-size:28px}
-  .modal ul{padding-left:18px;color:var(--muted)}
-  .footer-note{
-    margin-top:24px;
-    color:#94a3b8;
-    font-size:13px;
-  }
-</style>
-
-<link rel="manifest" href="manifest.webmanifest">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantenimiento Toolbox</title>
 <meta name="theme-color" content="#0f172a">
+<style>
+:root{
+  --bg:#0f172a; --card:#1e293b; --panel:#020617; --line:#334155; --text:#f8fafc; --muted:#cbd5e1;
+  --green:#22c55e; --yellow:#facc15; --blue:#0ea5e9; --red:#ef4444;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);padding:20px}
+h1{margin:8px 0 12px;font-size:clamp(34px,7vw,62px);line-height:1.05}
+h2,h3{margin-top:0}
+p{color:var(--muted);margin-top:0}
+button{padding:10px 16px;border:none;border-radius:12px;margin:5px;cursor:pointer}
+.menu button{background:var(--green);color:#052e16;font-weight:bold}
+#submenu button{background:var(--line);color:#fff}
+.calcbtn,.botbtn,.probtn,.simbtn{background:var(--green);color:#052e16;font-weight:bold}
+.ghost{background:var(--line);color:#fff}
+.card{background:var(--card);padding:16px;border-radius:16px;margin-top:15px;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+input,textarea{padding:10px;border-radius:10px;border:1px solid #475569;background:var(--panel);color:#fff;width:260px;max-width:100%;margin:4px}
+textarea{width:min(100%,760px);height:96px}
+.result{margin-top:10px;padding:12px;background:var(--panel);border-radius:10px;border:1px solid var(--line);line-height:1.6}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.86);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.modalbox{background:var(--card);padding:24px;border-radius:18px;width:min(92vw,560px);border:1px solid var(--line)}
+.splash{position:fixed;inset:0;background:#020617;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:10000}
+.logo{font-size:58px;margin-bottom:12px}
+.small{color:#94a3b8}
+.lang{position:absolute;top:12px;right:12px}
+.badge{display:inline-block;background:var(--blue);padding:6px 12px;border-radius:999px;font-size:12px;color:#fff}
+.topbar{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.app-icon{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#22c55e,#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:34px}
+.footer-note{margin-top:24px;color:#94a3b8;font-size:13px}
+.lock{color:var(--yellow);font-weight:bold}
+.note{font-size:13px;color:#94a3b8;margin-top:8px}
+.guide-step{margin:10px 0;padding:12px;border-radius:12px;background:var(--panel);border:1px solid var(--line)}
+.schematic-card{background:#f8fafc;color:#111827;border-radius:16px;padding:16px;margin-top:14px}
+.schematic-title{font-weight:700;color:#111827;margin-bottom:8px}
+.scheme-wrap{display:grid;gap:14px}
+.scheme-box{background:#fff;border:2px solid #cbd5e1;border-radius:14px;padding:10px}
+.scheme-active{border:4px solid #22c55e;box-shadow:0 0 0 2px rgba(34,197,94,.18)}
+.scheme-label{font-size:12px;color:#475569;margin-top:6px}
+svg{width:100%;height:auto;display:block}
+.listen-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#475569;margin-left:6px}
+.listen-dot.on{background:#22c55e;box-shadow:0 0 10px rgba(34,197,94,.7)}
+.pro-pill{color:var(--yellow);font-weight:bold}
+.cyl{position:relative;width:min(100%,560px);height:90px;border:2px solid #64748b;border-radius:14px;background:#111827;margin-top:12px;overflow:hidden}
+.cyl-ch-a,.cyl-ch-b{position:absolute;top:0;height:100%;transition:.35s ease}
+.cyl-ch-a{left:0;background:rgba(34,197,94,.22)}
+.cyl-ch-b{right:0;background:rgba(14,165,233,.16)}
+.cyl-rod{position:absolute;top:18px;left:16px;height:54px;width:44%;background:linear-gradient(90deg,#d1d5db,#f8fafc);border-radius:10px;transition:.35s ease}
+.cyl-piston{position:absolute;right:0;top:0;width:20px;height:54px;background:#94a3b8;border-radius:6px}
+</style>
 </head>
 <body>
 
 <div id="splash" class="splash">
-  <div class="splash-card">
-    <div class="splash-icon">⚙️</div>
-    <h2>Mantenimiento Tool box</h2>
-    <div>Industrial Maintenance Tools</div>
-    <small>Julio Elakdi</small>
+  <div class="logo">⚙️</div>
+  <h1 style="margin:0">Mantenimiento Toolbox</h1>
+  <div class="small">Industrial Maintenance Assistant</div>
+  <div class="small" style="margin-top:8px">Desarrollado por Julio Elakdi</div>
+</div>
+
+<div id="termsModal" class="modal" style="display:none">
+  <div class="modalbox">
+    <h2 id="termsTitle">Términos y condiciones de uso</h2>
+    <p id="termsP1">Esta aplicación es una herramienta de consulta técnica orientada a mantenimiento industrial.</p>
+    <p id="termsP2">El desarrollador no se hace responsable por daños en equipos, errores de diagnóstico, uso incorrecto de la información o accidentes por falta de medidas de seguridad.</p>
+    <p id="termsP3">Antes de intervenir cualquier equipo el usuario debe:</p>
+    <ul id="termsList">
+      <li>Desenergizar completamente el sistema</li>
+      <li>Verificar ausencia de tensión</li>
+      <li>Utilizar instrumentos de medición adecuados</li>
+      <li>Aplicar normas de seguridad industrial</li>
+      <li>Usar EPP correspondiente</li>
+      <li>Confirmar bloqueo y etiquetado (LOTO)</li>
+      <li>Medir antes de tocar cualquier componente</li>
+      <li>Verificar descarga de capacitores o acumuladores si corresponde</li>
+    </ul>
+    <p id="termsP4">Al presionar Aceptar, reconocés que usás la aplicación bajo tu criterio técnico y responsabilidad profesional.</p>
+    <button class="probtn" onclick="acceptTerms()" id="acceptBtn">Aceptar</button>
   </div>
+</div>
+
+<div id="proModal" class="modal" style="display:none">
+  <div class="modalbox">
+    <h2 id="proTitle">Versión Completa</h2>
+    <p id="proText">Esta función está disponible en la versión PRO.</p>
+    <button class="probtn" onclick="closePro()">OK</button>
+  </div>
+</div>
+
+<div class="lang">
+  <button onclick="setLang('es')">ES</button>
+  <button onclick="setLang('en')">EN</button>
 </div>
 
 <div class="topbar">
   <div class="app-icon">⚙️</div>
   <div>
     <span class="badge">FREE + PRO</span>
-    <div style="font-size:14px;color:#94a3b8">Versión visual APK-ready</div>
+    <div class="small">Versión v17 lista para Play Store</div>
   </div>
 </div>
 
-<h1>Mantenimiento Tool box</h1>
-<p>Herramientas técnicas para mantenimiento industrial e inyección.</p>
+<h1 id="titleMain">Mantenimiento Toolbox</h1>
+<p id="subtitleMain">Herramientas técnicas para mantenimiento industrial e inyección.</p>
 
 <div class="menu">
-  <button onclick="showMenu('hidraulica')">Hidráulica</button>
-  <button onclick="showMenu('electricidad')">Electricidad</button>
-  <button onclick="showMenu('inyeccion')">Inyección</button>
-  <button onclick="showMenu('neumatica')">Neumática</button>
-  <button onclick="showMenu('motores')">Motores</button>
+  <button onclick="showMenu('electricidad')" id="mElec">Electricidad</button>
+  <button onclick="showMenu('inyeccion')" id="mInj">Inyección</button>
+  <button onclick="showMenu('hidraulica')" id="mHid">Hidráulica</button>
+  <button onclick="showMenu('neumatica')" id="mNeu">Neumática</button>
+  <button onclick="showMenu('consultor')" id="mCon">Consultor</button>
 </div>
 
 <div id="submenu"></div>
 <div id="content"></div>
-
 <div class="footer-note">Desarrollado por Julio Elakdi · Demo Free + Pro</div>
 
-<div id="proModal" class="modal-bg">
-  <div class="modal">
-    <h3>Versión PRO</h3>
-    <p style="color:#cbd5e1;margin-top:0">Desbloqueá todas las herramientas avanzadas:</p>
-    <ul>
-      <li>Cable tierra, caída de tensión y protecciones</li>
-      <li>Fuerza de cierre, módulo de inyección y tiempo de llenado</li>
-      <li>Neumática y torque de motores</li>
-    </ul>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-      <button class="pro-btn" onclick="closePro(); alert('En la APK final esto abre la compra PRO.')">Actualizar a PRO</button>
-      <button class="ghost-btn" onclick="closePro()">Cerrar</button>
-    </div>
-  </div>
-</div>
-
 <script>
-setTimeout(()=>document.getElementById('splash').classList.add('hide'),1800);
+let lang = 'es';
+const T = {
+  es: {
+    titleMain:'Mantenimiento Toolbox', subtitleMain:'Herramientas técnicas para mantenimiento industrial e inyección.',
+    elec:'Electricidad', inj:'Inyección', hid:'Hidráulica', neu:'Neumática', con:'Consultor',
+    termsTitle:'Términos y condiciones de uso',
+    termsP1:'Esta aplicación es una herramienta de consulta técnica orientada a mantenimiento industrial.',
+    termsP2:'El desarrollador no se hace responsable por daños en equipos, errores de diagnóstico, uso incorrecto de la información o accidentes por falta de medidas de seguridad.',
+    termsP3:'Antes de intervenir cualquier equipo el usuario debe:',
+    termsList:['Desenergizar completamente el sistema','Verificar ausencia de tensión','Utilizar instrumentos de medición adecuados','Aplicar normas de seguridad industrial','Usar EPP correspondiente','Confirmar bloqueo y etiquetado (LOTO)','Medir antes de tocar cualquier componente','Verificar descarga de capacitores o acumuladores si corresponde'],
+    termsP4:'Al presionar Aceptar, reconocés que usás la aplicación bajo tu criterio técnico y responsabilidad profesional.',
+    accept:'Aceptar', proTitle:'Versión Completa', proText:'Esta función está disponible en la versión PRO.',
+    ask:'Consultar', speak:'Escuchar', dictate:'Dictar', noQuery:'Todavía no hay consulta.', notFound:'Consulta no encontrada en la base técnica.'
+  },
+  en: {
+    titleMain:'Maintenance Toolbox', subtitleMain:'Technical tools for industrial maintenance and plastics injection.',
+    elec:'Electrical', inj:'Injection', hid:'Hydraulics', neu:'Pneumatics', con:'Consultant',
+    termsTitle:'Terms and conditions of use',
+    termsP1:'This application is a technical reference tool intended for industrial maintenance.',
+    termsP2:'The developer is not responsible for equipment damage, diagnostic errors, misuse of information, or accidents caused by inadequate safety measures.',
+    termsP3:'Before working on any equipment, the user must:',
+    termsList:['Fully de-energize the system','Verify absence of voltage','Use proper measuring instruments','Apply industrial safety standards','Use the required PPE','Confirm lockout / tagout (LOTO)','Measure before touching any component','Verify discharge of capacitors or stored energy devices when applicable'],
+    termsP4:'By pressing Accept, you acknowledge that you use this application under your own technical judgment and professional responsibility.',
+    accept:'Accept', proTitle:'PRO version', proText:'This feature is available in the PRO version.',
+    ask:'Ask', speak:'Listen', dictate:'Dictate', noQuery:'No query yet.', notFound:'Answer not found in the technical base.'
+  }
+};
 
-function openPro(){ document.getElementById('proModal').classList.add('show'); }
-function closePro(){ document.getElementById('proModal').classList.remove('show'); }
+setTimeout(()=>{ document.getElementById('splash').style.display='none'; document.getElementById('termsModal').style.display='flex'; }, 2000);
+function acceptTerms(){ document.getElementById('termsModal').style.display='none'; }
+function openPro(){ document.getElementById('proModal').style.display='flex'; }
+function closePro(){ document.getElementById('proModal').style.display='none'; }
+
+function applyLang(){
+  const t=T[lang];
+  document.getElementById('titleMain').innerText=t.titleMain;
+  document.getElementById('subtitleMain').innerText=t.subtitleMain;
+  document.getElementById('mElec').innerText=t.elec;
+  document.getElementById('mInj').innerText=t.inj;
+  document.getElementById('mHid').innerText=t.hid;
+  document.getElementById('mNeu').innerText=t.neu;
+  document.getElementById('mCon').innerText=t.con;
+  document.getElementById('termsTitle').innerText=t.termsTitle;
+  document.getElementById('termsP1').innerText=t.termsP1;
+  document.getElementById('termsP2').innerText=t.termsP2;
+  document.getElementById('termsP3').innerText=t.termsP3;
+  document.getElementById('termsP4').innerText=t.termsP4;
+  document.getElementById('acceptBtn').innerText=t.accept;
+  document.getElementById('proTitle').innerText=t.proTitle;
+  document.getElementById('proText').innerText=t.proText;
+  document.getElementById('termsList').innerHTML=t.termsList.map(x=>`<li>${x}</li>`).join('');
+}
+function setLang(l){ lang=l; applyLang(); }
 
 function safe(id){ return parseFloat(document.getElementById(id).value); }
 
 function showMenu(menu){
-  const s=document.getElementById("submenu");
-  const c=document.getElementById("content");
-  c.innerHTML="";
-
-  if(menu==="hidraulica"){
-    s.innerHTML = `
-      <button onclick="force()">Fuerza cilindro</button>
-      <button onclick="power()">Potencia hidráulica</button>
-      <button onclick="flow()">Caudal bomba</button>`;
+  const s=document.getElementById('submenu');
+  document.getElementById('content').innerHTML='';
+  if(menu==='electricidad'){
+    s.innerHTML=`<button onclick="motor()">Corriente motor</button>
+    <button onclick="cable()">Cable trifásico</button>
+    <button onclick="motorDiag()">Diagnóstico motor trifásico</button>
+    <button onclick="openPro()">Cable tierra <span class="pro-pill">PRO</span></button>
+    <button onclick="openPro()">Caída tensión <span class="pro-pill">PRO</span></button>`;
   }
-
-  if(menu==="electricidad"){
-    s.innerHTML = `
-      <button onclick="motor()">Corriente motor</button>
-      <button onclick="cable()">Cable trifásico</button>
-      <button onclick="openPro()">Cable tierra <span class='lock'>PRO</span></button>
-      <button onclick="openPro()">Caída tensión <span class='lock'>PRO</span></button>
-      <button onclick="openPro()">Protección térmica <span class='lock'>PRO</span></button>`;
+  if(menu==='inyeccion'){
+    s.innerHTML=`<button onclick="clampForce()">Fuerza de cierre</button>
+    <button onclick="injModule()">Módulo inyección <span class="pro-pill">PRO</span></button>
+    <button onclick="fillTime()">Tiempo llenado <span class="pro-pill">PRO</span></button>
+    <button onclick="shotVolume()">Volumen disparo <span class="pro-pill">PRO</span></button>
+    <button onclick="ldRatio()">Relación L/D <span class="pro-pill">PRO</span></button>`;
   }
-
-  if(menu==="inyeccion"){
-    s.innerHTML = `
-      <button onclick="openPro()">Fuerza cierre <span class='lock'>PRO</span></button>
-      <button onclick="openPro()">Módulo inyección <span class='lock'>PRO</span></button>
-      <button onclick="openPro()">Tiempo llenado <span class='lock'>PRO</span></button>
-      <button onclick="openPro()">Volumen disparo <span class='lock'>PRO</span></button>
-      <button onclick="openPro()">Relación L/D <span class='lock'>PRO</span></button>`;
+  if(menu==='hidraulica'){
+    s.innerHTML=`<button onclick="force()">Fuerza cilindro</button>
+    <button onclick="power()">Potencia hidráulica</button>
+    <button onclick="flow()">Caudal bomba</button>`;
   }
-
-  if(menu==="neumatica"){
-    s.innerHTML = `
-      <button onclick="openPro()">Consumo aire <span class='lock'>PRO</span></button>
-      <button onclick="openPro()">Fuerza cilindro neumático <span class='lock'>PRO</span></button>`;
+  if(menu==='neumatica'){
+    s.innerHTML=`<button onclick="valve32Sim()">Válvula 3/2 <span class="pro-pill">PRO</span></button>
+    <button onclick="valve52Sim()">Válvula 5/2 <span class="pro-pill">PRO</span></button>
+    <button onclick="simpleEffectSim()">Cilindro simple efecto <span class="pro-pill">PRO</span></button>
+    <button onclick="doubleEffectSim()">Cilindro doble efecto <span class="pro-pill">PRO</span></button>
+    <button onclick="pneuCircuit()">Circuito completo <span class="pro-pill">PRO</span></button>
+    <button onclick="pneuDiag()">Diagnóstico neumático</button>
+    <button onclick="openPro()">Consumo aire <span class="pro-pill">PRO</span></button>`;
   }
-
-  if(menu==="motores"){
-    s.innerHTML = `
-      <button onclick="openPro()">Torque motor <span class='lock'>PRO</span></button>`;
+  if(menu==='consultor'){
+    s.innerHTML=`<button onclick="consultor()">${T[lang].con}</button>`;
+    consultor();
   }
 }
 
-/* FREE */
-function force(){
-document.getElementById("content").innerHTML=`
-<div class="card">
-<h3>Fuerza cilindro hidráulico</h3>
-<input id="d" placeholder="Diámetro mm">
-<input id="p" placeholder="Presión bar">
-<br>
-<button class="calcbtn" onclick="calcForce()">Calcular</button>
-<div id="r" class="result"></div>
-</div>`;
+/* ELECTRICIDAD */
+function motor(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Corriente motor':'Motor current'}</h3><input id="kw" placeholder="${lang==='es'?'Potencia kW':'Power kW'}"><input id="v" placeholder="${lang==='es'?'Voltaje V':'Voltage V'}"><br><button class="calcbtn" onclick="calcMotor()">${lang==='es'?'Calcular':'Calculate'}</button><div id="r4" class="result"></div><div class="note">FP=0.85 / η=0.90<br>${lang==='es'?'Referencia 380 V: 1.5 kW ≈ 3 A · 4 kW ≈ 8 A · 7.5 kW ≈ 14 A · 11 kW ≈ 21 A · 15 kW ≈ 28 A':'380 V reference: 1.5 kW ≈ 3 A · 4 kW ≈ 8 A · 7.5 kW ≈ 14 A · 11 kW ≈ 21 A · 15 kW ≈ 28 A'}</div></div>`; }
+function calcMotor(){ let kw=safe('kw'),v=safe('v'); if(isNaN(kw)||isNaN(v)){document.getElementById('r4').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} document.getElementById('r4').innerHTML=`${lang==='es'?'Corriente':'Current'} ≈ ${((kw*1000)/(1.732*v*0.85*0.9)).toFixed(2)} A`; }
+function cable(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Cable trifásico':'Three-phase cable'}</h3><input id="w" placeholder="${lang==='es'?'Potencia W':'Power W'}"><input id="v2" placeholder="${lang==='es'?'Voltaje V':'Voltage V'}"><input id="fp" placeholder="${lang==='es'?'Factor de potencia':'Power factor'}"><br><button class="calcbtn" onclick="calcCable()">${lang==='es'?'Calcular':'Calculate'}</button><div id="r5" class="result"></div><div class="note">${lang==='es'?'Tabla rápida orientativa: 1.5 mm² ≈ 10 A · 2.5 mm² ≈ 16 A · 4 mm² ≈ 25 A · 6 mm² ≈ 32 A · 10 mm² ≈ 50 A':'Quick guide: 1.5 mm² ≈ 10 A · 2.5 mm² ≈ 16 A · 4 mm² ≈ 25 A · 6 mm² ≈ 32 A · 10 mm² ≈ 50 A'}</div></div>`; }
+function calcCable(){ let w=safe('w'),v=safe('v2'),fp=safe('fp'); if(isNaN(w)||isNaN(v)||isNaN(fp)){document.getElementById('r5').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} document.getElementById('r5').innerHTML=`${lang==='es'?'Corriente':'Current'} ≈ ${(w/(1.732*v*fp)).toFixed(2)} A`; }
+function motorDiag(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Diagnóstico motor trifásico':'Three-phase motor diagnosis'}</h3><div class="guide-step"><strong>${lang==='es'?'1️⃣ Sacar puentes':'1️⃣ Remove links'}</strong>${lang==='es'?'Quitar chapas o puentes para medir cada devanado por separado.':'Remove all links to measure each winding separately.'}</div><div class="guide-step"><strong>${lang==='es'?'2️⃣ Encontrar los tres pares de bobina':'2️⃣ Find the three winding pairs'}</strong>${lang==='es'?'Con continuidad/ohmios, encontrar los 3 pares que tienen continuidad. Ejemplo: 1-4, 2-5 y 3-6.':'Using continuity/ohms, identify the 3 terminal pairs with continuity. Example: 1-4, 2-5 and 3-6.'}</div><div class="guide-step"><strong>${lang==='es'?'3️⃣ Comparar resistencias':'3️⃣ Compare resistances'}</strong>${lang==='es'?'Las resistencias deben ser similares. Diferencia máxima recomendada ±10 %.':'Resistances should be similar. Recommended maximum difference ±10%.'}</div><div class="guide-step"><strong>${lang==='es'?'4️⃣ Megger 500 V borne a carcasa':'4️⃣ 500 V megger terminal to frame'}</strong>${lang==='es'?'Medir cada borne a carcasa.':'Measure each terminal to frame/ground.'}</div><div class="guide-step"><strong>${lang==='es'?'5️⃣ Verificar continuidad entre bobinas distintas':'5️⃣ Check continuity between different windings'}</strong>${lang==='es'?'No debe haber continuidad entre pares distintos.':'There should be no continuity between different winding pairs.'}</div></div>`; }
+
+/* INYECCIÓN */
+function clampForce(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Fuerza de cierre':'Clamp force'}</h3><input id="ap" placeholder="${lang==='es'?'Área proyectada cm²':'Projected area cm²'}"><input id="pc" placeholder="${lang==='es'?'Presión cavidad kgf/cm²':'Cavity pressure kgf/cm²'}"><br><button class="calcbtn" onclick="calcClamp()">${lang==='es'?'Calcular':'Calculate'}</button><div id="rcf" class="result"></div><div class="note">${lang==='es'?'Incluye 20 % de seguridad. Referencias típicas: PP/PE 300–500 kgf/cm² · ABS 400–600 · PC/PA 600–800':'Includes 20% safety margin. Typical references: PP/PE 300–500 kgf/cm² · ABS 400–600 · PC/PA 600–800'}</div></div>`; }
+function calcClamp(){ let ap=safe('ap'),pc=safe('pc'); if(isNaN(ap)||isNaN(pc)){document.getElementById('rcf').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} let kgf=ap*pc*1.2, ton=kgf/1000; document.getElementById('rcf').innerHTML=`${lang==='es'?'Fuerza requerida':'Required force'} ≈ ${kgf.toFixed(0)} kgf<br>≈ ${ton.toFixed(2)} ${lang==='es'?'toneladas':'tons'}`; }
+function injModule(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Módulo de inyección':'Injection module'}</h3><input id="di" placeholder="${lang==='es'?'Diámetro cilindro mm':'Cylinder diameter mm'}"><input id="dh" placeholder="${lang==='es'?'Diámetro husillo mm':'Screw diameter mm'}"><input id="pb" placeholder="${lang==='es'?'Presión bar':'Pressure bar'}"><input id="do" placeholder="${lang==='es'?'Diámetro orificio pico mm':'Nozzle orifice diameter mm'}"><br><button class="calcbtn" onclick="calcInj()">${lang==='es'?'Calcular':'Calculate'}</button><div id="rinj" class="result"></div></div>`; }
+function calcInj(){ let di=safe('di'),dh=safe('dh'),pb=safe('pb'),dof=safe('do'); if([di,dh,pb,dof].some(v=>isNaN(v))){document.getElementById('rinj').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} let areaC=0.7854*di*di, areaH=0.7854*dh*dh, rel=areaC/areaH, pEsp=pb*rel, areaPico=0.7854*dof*dof, indice=areaH/areaPico; document.getElementById('rinj').innerHTML=`${lang==='es'?'Relación área cilindro/husillo':'Cylinder/screw area ratio'} ≈ ${rel.toFixed(2)}<br>${lang==='es'?'Presión específica aprox.':'Approx. specific pressure'} ≈ ${pEsp.toFixed(0)} bar<br>${lang==='es'?'Índice de salida por pico':'Nozzle output index'} ≈ ${indice.toFixed(2)}`; }
+function fillTime(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Tiempo de llenado':'Fill time'} <span class="pro-pill">PRO</span></h3><input id="vp" placeholder="${lang==='es'?'Volumen pieza cm³':'Part volume cm³'}"><input id="ca" placeholder="${lang==='es'?'Caudal inyección cm³/s':'Injection flow cm³/s'}"><br><button class="calcbtn" onclick="calcFill()">${lang==='es'?'Calcular':'Calculate'}</button><div id="rfill" class="result"></div><div class="note">${lang==='es'?'Referencia: pared fina 0.2–0.5 s · pieza media 0.5–1.5 s · pieza grande 1.5–3 s':'Reference: thin wall 0.2–0.5 s · medium part 0.5–1.5 s · large part 1.5–3 s'}</div></div>`; }
+function calcFill(){ let vp=safe('vp'),ca=safe('ca'); if(isNaN(vp)||isNaN(ca)||ca===0){document.getElementById('rfill').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} document.getElementById('rfill').innerHTML=`${lang==='es'?'Tiempo de llenado':'Fill time'} ≈ ${(vp/ca).toFixed(2)} s`; }
+function shotVolume(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Volumen de disparo':'Shot volume'} <span class="pro-pill">PRO</span></h3><input id="dh2" placeholder="${lang==='es'?'Diámetro husillo mm':'Screw diameter mm'}"><input id="carr" placeholder="${lang==='es'?'Carrera husillo mm':'Screw stroke mm'}"><br><button class="calcbtn" onclick="calcShot()">${lang==='es'?'Calcular':'Calculate'}</button><div id="rshot" class="result"></div><div class="note">${lang==='es'?'Recomendación: la pieza debería ocupar entre 30 % y 70 % del volumen útil del husillo.':'Recommendation: part volume should use 30% to 70% of useful screw volume.'}</div></div>`; }
+function calcShot(){ let dh=safe('dh2'),carr=safe('carr'); if(isNaN(dh)||isNaN(carr)){document.getElementById('rshot').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} let vol=0.7854*dh*dh*carr/1000; document.getElementById('rshot').innerHTML=`${lang==='es'?'Volumen de disparo':'Shot volume'} ≈ ${vol.toFixed(2)} cm³`; }
+function ldRatio(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Relación L/D husillo':'Screw L/D ratio'} <span class="pro-pill">PRO</span></h3><input id="lh" placeholder="${lang==='es'?'Longitud husillo mm':'Screw length mm'}"><input id="dh3" placeholder="${lang==='es'?'Diámetro husillo mm':'Screw diameter mm'}"><br><button class="calcbtn" onclick="calcLD()">${lang==='es'?'Calcular':'Calculate'}</button><div id="rld" class="result"></div><div class="note">${lang==='es'?'Valores orientativos: PP 20–24 · ABS 22–24 · PC 24–26 · PA 24–26':'Guide values: PP 20–24 · ABS 22–24 · PC 24–26 · PA 24–26'}</div></div>`; }
+function calcLD(){ let lh=safe('lh'),dh=safe('dh3'); if(isNaN(lh)||isNaN(dh)||dh===0){document.getElementById('rld').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} document.getElementById('rld').innerHTML=`${lang==='es'?'Relación L/D':'L/D ratio'} ≈ ${(lh/dh).toFixed(2)}`; }
+
+/* HIDRÁULICA */
+function force(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Fuerza cilindro hidráulico':'Hydraulic cylinder force'}</h3><input id="d" placeholder="${lang==='es'?'Diámetro mm':'Diameter mm'}"><input id="p" placeholder="${lang==='es'?'Presión bar':'Pressure bar'}"><br><button class="calcbtn" onclick="calcForce()">${lang==='es'?'Calcular':'Calculate'}</button><div id="r" class="result"></div></div>`; }
+function calcForce(){ let d=safe('d'),p=safe('p'); if(isNaN(d)||isNaN(p)){document.getElementById('r').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} document.getElementById('r').innerHTML=`${lang==='es'?'Fuerza':'Force'} ≈ ${Math.round(p*0.785*d*d/100)} kgf`; }
+function power(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Potencia hidráulica':'Hydraulic power'}</h3><input id="q" placeholder="${lang==='es'?'Caudal L/min':'Flow L/min'}"><input id="p2" placeholder="${lang==='es'?'Presión bar':'Pressure bar'}"><br><button class="calcbtn" onclick="calcPower()">${lang==='es'?'Calcular':'Calculate'}</button><div id="r2" class="result"></div><div class="note">${lang==='es'?'Referencia hidráulica: presión típica 160–250 bar · temperatura ideal del aceite 40–55 °C':'Hydraulic reference: typical pressure 160–250 bar · ideal oil temperature 40–55 °C'}</div></div>`; }
+function calcPower(){ let q=safe('q'),p=safe('p2'); if(isNaN(q)||isNaN(p)){document.getElementById('r2').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} document.getElementById('r2').innerHTML=`${lang==='es'?'Potencia':'Power'} ≈ ${(q*p/600).toFixed(2)} kW`; }
+function flow(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Caudal bomba':'Pump flow'}</h3><input id="cc" placeholder="cc/rev"><input id="rpm" placeholder="RPM"><br><button class="calcbtn" onclick="calcFlow()">${lang==='es'?'Calcular':'Calculate'}</button><div id="r3" class="result"></div></div>`; }
+function calcFlow(){ let cc=safe('cc'),rpm=safe('rpm'); if(isNaN(cc)||isNaN(rpm)){document.getElementById('r3').innerText=lang==='es'?'Completá los valores':'Complete the values';return;} document.getElementById('r3').innerHTML=`${lang==='es'?'Caudal':'Flow'} ≈ ${((cc*rpm)/1000).toFixed(2)} L/min`; }
+
+/* NEUMÁTICA RESTAURADA */
+function valve32Sim(){
+  document.getElementById('content').innerHTML = `
+  <div class="card">
+    <h3>Válvula 3/2 <span class="pro-pill">PRO</span></h3>
+    <div class="note">${lang==='es'?'Se resalta en verde el cuadro activo.':'Active box highlighted in green.'}</div>
+    <div class="schematic-card">
+      <div class="scheme-wrap">
+        <div id="box32reposo" class="scheme-box scheme-active">
+          <div class="schematic-title">${lang==='es'?'Reposo':'Rest'}</div>
+          <svg viewBox="0 0 320 180"><rect x="90" y="40" width="70" height="70" fill="none" stroke="#111827" stroke-width="2"/><rect x="160" y="40" width="70" height="70" fill="none" stroke="#111827" stroke-width="2"/><line x1="125" y1="20" x2="125" y2="40" stroke="#111827" stroke-width="2"/><line x1="125" y1="110" x2="125" y2="150" stroke="#111827" stroke-width="2"/><line x1="70" y1="75" x2="90" y2="75" stroke="#111827" stroke-width="2"/><line x1="110" y1="75" x2="125" y2="75" stroke="#111827" stroke-width="2"/><line x1="125" y1="75" x2="125" y2="125" stroke="#111827" stroke-width="2"/><polygon points="121,123 129,123 125,132" fill="#111827"/><text x="118" y="16" font-size="12">1(P)</text><text x="18" y="79" font-size="12">2(A)</text><text x="108" y="165" font-size="12">3(R)</text></svg>
+          <div class="scheme-label">A → R · P bloqueada</div>
+        </div>
+        <div id="box32act" class="scheme-box">
+          <div class="schematic-title">${lang==='es'?'Actuada':'Actuated'}</div>
+          <svg viewBox="0 0 320 180"><rect x="90" y="40" width="70" height="70" fill="none" stroke="#111827" stroke-width="2"/><rect x="160" y="40" width="70" height="70" fill="none" stroke="#111827" stroke-width="2"/><line x1="125" y1="20" x2="125" y2="40" stroke="#111827" stroke-width="2"/><line x1="70" y1="75" x2="90" y2="75" stroke="#111827" stroke-width="2"/><line x1="110" y1="75" x2="125" y2="75" stroke="#111827" stroke-width="2"/><line x1="125" y1="75" x2="125" y2="40" stroke="#111827" stroke-width="2"/><polygon points="121,44 129,44 125,35" fill="#111827"/><text x="118" y="16" font-size="12">1(P)</text><text x="18" y="79" font-size="12">2(A)</text><text x="108" y="165" font-size="12">3(R)</text></svg>
+          <div class="scheme-label">P → A · R bloqueada</div>
+        </div>
+      </div>
+    </div>
+    <button class="simbtn" onclick="set32('reposo')">${lang==='es'?'Reposo':'Rest'}</button>
+    <button class="simbtn" onclick="set32('act')">${lang==='es'?'Actuar':'Actuate'}</button>
+    <div id="state32" class="result">${lang==='es'?'Cuadro activo: reposo':'Active box: rest'}</div>
+  </div>`;
 }
-function calcForce(){
-  let d=safe("d"), p=safe("p");
-  if(isNaN(d)||isNaN(p)){ document.getElementById("r").innerText="Completá los valores"; return; }
-  let f=p*0.7854*d*d/100;
-  document.getElementById("r").innerText="Fuerza ≈ "+Math.round(f)+" kgf";
+function set32(mode){ const a=document.getElementById('box32reposo'), b=document.getElementById('box32act'); if(mode==='reposo'){a.classList.add('scheme-active');b.classList.remove('scheme-active');document.getElementById('state32').innerHTML=lang==='es'?'Cuadro activo: reposo<br>A → R · P bloqueada':'Active box: rest<br>A → R · P blocked';} else {b.classList.add('scheme-active');a.classList.remove('scheme-active');document.getElementById('state32').innerHTML=lang==='es'?'Cuadro activo: actuada<br>P → A · R bloqueada':'Active box: actuated<br>P → A · R blocked';}}
+
+function valve52Sim(){
+  document.getElementById('content').innerHTML = `
+  <div class="card">
+    <h3>Válvula 5/2 <span class="pro-pill">PRO</span></h3>
+    <div class="schematic-card">
+      <div class="scheme-wrap">
+        <div id="box52p1" class="scheme-box scheme-active">
+          <div class="schematic-title">${lang==='es'?'Posición 1':'Position 1'}</div>
+          <svg viewBox="0 0 360 190"><rect x="90" y="45" width="80" height="80" fill="none" stroke="#111827" stroke-width="2"/><rect x="170" y="45" width="80" height="80" fill="none" stroke="#111827" stroke-width="2"/><line x1="130" y1="25" x2="130" y2="45" stroke="#111827" stroke-width="2"/><line x1="70" y1="85" x2="90" y2="85" stroke="#111827" stroke-width="2"/><line x1="130" y1="85" x2="170" y2="85" stroke="#111827" stroke-width="2"/><polygon points="162,81 162,89 170,85" fill="#111827"/><line x1="210" y1="85" x2="290" y2="85" stroke="#111827" stroke-width="2"/><line x1="210" y1="85" x2="210" y2="140" stroke="#111827" stroke-width="2"/><polygon points="206,138 214,138 210,147" fill="#111827"/><text x="120" y="18" font-size="12">1(P)</text><text x="22" y="89" font-size="12">2(A)</text><text x="294" y="89" font-size="12">4(B)</text><text x="198" y="164" font-size="12">3(R)</text></svg>
+          <div class="scheme-label">P → A · B descarga</div>
+        </div>
+        <div id="box52p2" class="scheme-box">
+          <div class="schematic-title">${lang==='es'?'Posición 2':'Position 2'}</div>
+          <svg viewBox="0 0 360 190"><rect x="90" y="45" width="80" height="80" fill="none" stroke="#111827" stroke-width="2"/><rect x="170" y="45" width="80" height="80" fill="none" stroke="#111827" stroke-width="2"/><line x1="210" y1="25" x2="210" y2="45" stroke="#111827" stroke-width="2"/><line x1="290" y1="85" x2="250" y2="85" stroke="#111827" stroke-width="2"/><polygon points="282,81 282,89 290,85" fill="#111827"/><line x1="210" y1="85" x2="170" y2="85" stroke="#111827" stroke-width="2"/><line x1="130" y1="85" x2="130" y2="140" stroke="#111827" stroke-width="2"/><polygon points="126,138 134,138 130,147" fill="#111827"/><text x="200" y="18" font-size="12">1(P)</text><text x="294" y="89" font-size="12">4(B)</text><text x="22" y="89" font-size="12">2(A)</text><text x="118" y="164" font-size="12">3(R)</text></svg>
+          <div class="scheme-label">P → B · A descarga</div>
+        </div>
+      </div>
+    </div>
+    <button class="simbtn" onclick="set52('p1')">${lang==='es'?'Posición 1':'Position 1'}</button>
+    <button class="simbtn" onclick="set52('p2')">${lang==='es'?'Posición 2':'Position 2'}</button>
+    <div id="state52" class="result">${lang==='es'?'Cuadro activo: posición 1':'Active box: position 1'}</div>
+  </div>`;
+}
+function set52(mode){ const a=document.getElementById('box52p1'), b=document.getElementById('box52p2'); if(mode==='p1'){a.classList.add('scheme-active');b.classList.remove('scheme-active');document.getElementById('state52').innerHTML=lang==='es'?'Cuadro activo: posición 1<br>P → A · B descarga':'Active box: position 1<br>P → A · B exhaust';} else {b.classList.add('scheme-active');a.classList.remove('scheme-active');document.getElementById('state52').innerHTML=lang==='es'?'Cuadro activo: posición 2<br>P → B · A descarga':'Active box: position 2<br>P → B · A exhaust';}}
+
+function simpleEffectSim(){
+  document.getElementById('content').innerHTML = `
+  <div class="card">
+    <h3>${lang==='es'?'Cilindro simple efecto':'Single-acting cylinder'} <span class="pro-pill">PRO</span></h3>
+    <div class="result">${lang==='es'?'Reposo: retraído por resorte. Actuado: P → A y el vástago avanza.':'Rest: spring return. Actuated: P → A and rod extends.'}</div>
+    <div class="cyl"><div id="sa" class="cyl-ch-a" style="width:32%"></div><div id="sb" class="cyl-ch-b" style="width:68%"></div><div id="srod" class="cyl-rod" style="left:10%"><div class="cyl-piston"></div></div></div>
+    <button class="simbtn" onclick="simpleSet(0)">${lang==='es'?'Reposo':'Rest'}</button>
+    <button class="simbtn" onclick="simpleSet(1)">${lang==='es'?'Actuar':'Actuate'}</button>
+  </div>`;
+}
+function simpleSet(v){ let rod=document.getElementById('srod'), a=document.getElementById('sa'), b=document.getElementById('sb'); if(v===1){rod.style.left='36%';a.style.width='70%';b.style.width='30%';} else {rod.style.left='10%';a.style.width='32%';b.style.width='68%';} }
+
+function doubleEffectSim(){
+  document.getElementById('content').innerHTML = `
+  <div class="card">
+    <h3>${lang==='es'?'Cilindro doble efecto':'Double-acting cylinder'} <span class="pro-pill">PRO</span></h3>
+    <div id="dstate" class="result">${lang==='es'?'Posición 1: cilindro avanza':'Position 1: cylinder extends'}</div>
+    <div class="cyl"><div id="da" class="cyl-ch-a" style="width:68%"></div><div id="db" class="cyl-ch-b" style="width:32%"></div><div id="drod" class="cyl-rod" style="left:36%"><div class="cyl-piston"></div></div></div>
+    <button class="simbtn" onclick="doubleSet(1)">${lang==='es'?'Posición 1':'Position 1'}</button>
+    <button class="simbtn" onclick="doubleSet(2)">${lang==='es'?'Posición 2':'Position 2'}</button>
+  </div>`;
+}
+function doubleSet(v){ let rod=document.getElementById('drod'), a=document.getElementById('da'), b=document.getElementById('db'), st=document.getElementById('dstate'); if(v===1){rod.style.left='36%';a.style.width='68%';b.style.width='32%';st.innerHTML=lang==='es'?'Posición 1: P → A · cilindro avanza':'Position 1: P → A · cylinder extends';} else {rod.style.left='10%';a.style.width='32%';b.style.width='68%';st.innerHTML=lang==='es'?'Posición 2: P → B · cilindro retrocede':'Position 2: P → B · cylinder retracts';} }
+
+function pneuCircuit(){
+  document.getElementById('content').innerHTML = `
+  <div class="card">
+    <h3>${lang==='es'?'Circuito neumático completo':'Complete pneumatic circuit'} <span class="pro-pill">PRO</span></h3>
+    <div id="ccstate" class="result">${lang==='es'?'Compresor → 5/2 → cilindro doble efecto. Posición 1 activa.':'Compressor → 5/2 → double-acting cylinder. Position 1 active.'}</div>
+    <div class="cyl"><div id="ca" class="cyl-ch-a" style="width:68%"></div><div id="cb" class="cyl-ch-b" style="width:32%"></div><div id="crod" class="cyl-rod" style="left:36%"><div class="cyl-piston"></div></div></div>
+    <button class="simbtn" onclick="circuitSet(1)">${lang==='es'?'Posición 1':'Position 1'}</button>
+    <button class="simbtn" onclick="circuitSet(2)">${lang==='es'?'Posición 2':'Position 2'}</button>
+  </div>`;
+}
+function circuitSet(v){ let rod=document.getElementById('crod'), a=document.getElementById('ca'), b=document.getElementById('cb'), st=document.getElementById('ccstate'); if(v===1){rod.style.left='36%';a.style.width='68%';b.style.width='32%';st.innerHTML=lang==='es'?'Posición 1: P → A · B descarga · cilindro avanza':'Position 1: P → A · B exhaust · cylinder extends';} else {rod.style.left='10%';a.style.width='32%';b.style.width='68%';st.innerHTML=lang==='es'?'Posición 2: P → B · A descarga · cilindro retrocede':'Position 2: P → B · A exhaust · cylinder retracts';} }
+
+function pneuDiag(){ document.getElementById('content').innerHTML=`<div class="card"><h3>${lang==='es'?'Diagnóstico neumático':'Pneumatic diagnosis'}</h3><div class="guide-step">${lang==='es'?'Si el cilindro no avanza: revisar presión, caudal, válvula trabada y fugas.':'If the cylinder does not move: check pressure, flow, stuck valve and leaks.'}</div><div class="guide-step">${lang==='es'?'Si se queda a mitad: revisar regulación, rozamiento y presión insuficiente.':'If it stops halfway: check regulation, friction and insufficient pressure.'}</div><div class="guide-step">${lang==='es'?'Si golpea al final: revisar amortiguación y caudal.':'If it hits at end of stroke: check cushioning and flow.'}</div><div class="guide-step">${lang==='es'?'Presión típica de trabajo: 6 a 8 bar.':'Typical working pressure: 6 to 8 bar.'}</div></div>`; }
+
+/* CONSULTOR */
+function consultor(){
+  document.getElementById('content').innerHTML = `
+  <div class="card">
+    <h3>${lang==='es'?'Consultor técnico':'Technical consultant'}</h3>
+    <p>${lang==='es'?'Escribí o dictá una consulta técnica.':'Type or dictate a technical query.'}</p>
+    <textarea id="q" placeholder="${lang==='es'?'Ej: instalación de relé de estado sólido':'Ex: solid state relay installation'}"></textarea>
+    <br>
+    <button class="botbtn" onclick="ask()">${T[lang].ask}</button>
+    <button class="ghost" onclick="voice()">🎤 ${T[lang].dictate}<span id="dot" class="listen-dot"></span></button>
+    <button class="ghost" onclick="speak()">🔊 ${T[lang].speak}</button>
+    <div id="a" class="result">${T[lang].noQuery}</div>
+  </div>`;
+}
+function normalizeText(t){ return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function ask(){
+  let q=normalizeText(document.getElementById('q').value||''), r='';
+  if(q.includes('rele')||q.includes('relay')||q.includes('ssr')||q.includes('estado solido')){
+    r = lang==='es'
+      ? '<b>Relé de estado sólido (SSR)</b><br><br>1. Verificar tensión de control.<br>2. Confirmar corriente máxima de carga.<br>3. Usar disipador térmico adecuado.<br>4. Aplicar pasta térmica.<br>5. Colocar fusible o protección rápida.<br>6. Medir consumo real de la carga.<br><br><b>Para que no se queme:</b><br>• No sobrecargarlo.<br>• No montarlo sin disipador.<br>• Revisar que el tipo AC/DC sea correcto.<br><br><b>Cómo saber si está mal:</b><br>• Si queda siempre conduciendo, puede estar en corto.<br>• Si no conmuta, puede tener dañada la entrada o la salida.'
+      : '<b>Solid state relay (SSR)</b><br><br>1. Verify control voltage.<br>2. Confirm maximum load current.<br>3. Use a proper heatsink.<br>4. Apply thermal paste.<br>5. Use fuse or fast protection.<br>6. Measure actual load current.<br><br><b>To avoid damage:</b><br>• Do not overload it.<br>• Do not mount it without heatsink.<br>• Verify correct AC/DC type.<br><br><b>How to detect failure:</b><br>• If it stays always ON, it may be shorted.<br>• If it does not switch, input or output may be damaged.';
+  } else if(q.includes('motor')){
+    r = lang==='es'
+      ? '<b>Motor trifásico</b><br><br>1. Sacar puentes.<br>2. Encontrar los 3 pares de bobina.<br>3. Comparar resistencias.<br>4. Medir con megger de 500 V cada borne a carcasa.<br>5. Verificar que no haya continuidad entre bobinas distintas.'
+      : '<b>Three-phase motor</b><br><br>1. Remove links.<br>2. Find the 3 winding pairs.<br>3. Compare resistances.<br>4. Test each terminal to frame with 500 V megger.<br>5. Check there is no continuity between different windings.';
+  } else if(q.includes('valvula 5/2')||q.includes('5/2')){
+    r = lang==='es'
+      ? '<b>Válvula 5/2</b><br><br>Tiene dos posiciones y cinco vías. Una posición conecta P→A y descarga B. La otra conecta P→B y descarga A.'
+      : '<b>5/2 valve</b><br><br>It has two positions and five ports. One position connects P→A and exhausts B. The other connects P→B and exhausts A.';
+  } else {
+    r = T[lang].notFound;
+  }
+  document.getElementById('a').innerHTML = r;
+}
+function voice(){
+  let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ alert(lang==='es'?'El navegador no soporta reconocimiento de voz aquí.':'Speech recognition is not supported here.'); return; }
+  let rec=new SR(); rec.lang=lang==='es'?'es-AR':'en-US'; rec.interimResults=false; rec.maxAlternatives=1;
+  let dot=document.getElementById('dot'); if(dot) dot.classList.add('on'); rec.start();
+  rec.onresult=e=>{ document.getElementById('q').value=e.results[0][0].transcript; ask(); };
+  rec.onend=()=>{ if(dot) dot.classList.remove('on'); };
+  rec.onerror=()=>{ if(dot) dot.classList.remove('on'); };
+}
+function speak(){
+  let txt=document.getElementById('a')?.innerText||''; if(!txt.trim()) return;
+  let voices=speechSynthesis.getVoices(); let voice=voices.find(v=>v.lang.includes(lang==='es'?'es':'en'))||null;
+  let u=new SpeechSynthesisUtterance(txt); u.voice=voice; u.pitch=0.78; u.rate=0.9;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
 }
 
-function power(){
-document.getElementById("content").innerHTML=`
-<div class="card">
-<h3>Potencia hidráulica</h3>
-<input id="q" placeholder="Caudal L/min">
-<input id="p2" placeholder="Presión bar">
-<br>
-<button class="calcbtn" onclick="calcPower()">Calcular</button>
-<div id="r2" class="result"></div>
-</div>`;
-}
-function calcPower(){
-  let q=safe("q"), p=safe("p2");
-  if(isNaN(q)||isNaN(p)){ document.getElementById("r2").innerText="Completá los valores"; return; }
-  let kw=q*p/600;
-  document.getElementById("r2").innerText="Potencia ≈ "+kw.toFixed(2)+" kW";
-}
-
-function flow(){
-document.getElementById("content").innerHTML=`
-<div class="card">
-<h3>Caudal bomba</h3>
-<input id="cc" placeholder="cc/rev">
-<input id="rpm" placeholder="RPM">
-<br>
-<button class="calcbtn" onclick="calcFlow()">Calcular</button>
-<div id="r3" class="result"></div>
-</div>`;
-}
-function calcFlow(){
-  let cc=safe("cc"), rpm=safe("rpm");
-  if(isNaN(cc)||isNaN(rpm)){ document.getElementById("r3").innerText="Completá los valores"; return; }
-  let q=(cc*rpm)/1000;
-  document.getElementById("r3").innerText="Caudal ≈ "+q.toFixed(2)+" L/min";
-}
-
-function motor(){
-document.getElementById("content").innerHTML=`
-<div class="card">
-<h3>Corriente motor</h3>
-<input id="kw" placeholder="Potencia kW">
-<input id="v" placeholder="Voltaje V">
-<br>
-<button class="calcbtn" onclick="calcMotor()">Calcular</button>
-<div id="r4" class="result"></div>
-<div class="note">FP=0.85 / Rendimiento=0.90</div>
-</div>`;
-}
-function calcMotor(){
-  let kw=safe("kw"), v=safe("v");
-  if(isNaN(kw)||isNaN(v)){ document.getElementById("r4").innerText="Completá los valores"; return; }
-  let i=(kw*1000)/(1.732*v*0.85*0.9);
-  document.getElementById("r4").innerText="Corriente ≈ "+i.toFixed(2)+" A";
-}
-
-function cable(){
-document.getElementById("content").innerHTML=`
-<div class="card">
-<h3>Cable trifásico</h3>
-<input id="w" placeholder="Potencia W">
-<input id="v2" placeholder="Voltaje V">
-<input id="fp" placeholder="Factor potencia">
-<br>
-<button class="calcbtn" onclick="calcCable()">Calcular</button>
-<div id="r5" class="result"></div>
-</div>`;
-}
-function calcCable(){
-  let w=safe("w"), v=safe("v2"), fp=safe("fp");
-  if(isNaN(w)||isNaN(v)||isNaN(fp)){ document.getElementById("r5").innerText="Completá los valores"; return; }
-  let i=w/(1.732*v*fp);
-  document.getElementById("r5").innerText="Corriente ≈ "+i.toFixed(2)+" A";
-}
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('./service-worker.js');
-  });
-}
+applyLang();
 </script>
 </body>
 </html>
