@@ -1,18 +1,20 @@
 {
   "name": "Industrial Maintenance Toolbox",
-  "short_name": "MaintToolbox",
-  "start_url": ".",
+  "short_name": "Toolbox",
+  "description": "Herramientas técnicas para mantenimiento industrial, hidráulica, electricidad e inyección plástica.",
+  "start_url": "/mantenimiento-toolbox/",
+  "scope": "/mantenimiento-toolbox/",
   "display": "standalone",
-  "background_color": "#0f1b2d",
-  "theme_color": "#0f1b2d",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/mantenimiento-toolbox/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "/mantenimiento-toolbox/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
